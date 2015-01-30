@@ -1,0 +1,4 @@
+1. Watch videos: http://varianceexplained.org/RData/lessons/lesson4/
+2. Swirl: Lesson 4. Exploratory Data Analysis with data.table
+
+install_course_github("dgrtwo", "RData", branch="quizzes", multi=TRUE)
