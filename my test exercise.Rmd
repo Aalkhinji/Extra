@@ -1,0 +1,75 @@
+---
+title: "Test_exercise"
+author: "Aisha"
+date: "February 1, 2015"
+output: html_document
+        
+---
+
+
+
+##Converting R script into Rmd file with nice formatting:
+#### From: http://www.cookbook-r.com/Graphs/Bar_and_line_graphs_%28ggplot2%29/.
+#### Cookbook for R — Powered by Markdoc. Please report errors to winston@stdout.org. 
+
+[links!](http://www.cookbrook-r.com)
+
+
+##Laod ggplot2
+```{r}
+library(ggplot2)
+```
+
+
+###Design the data based on time, type and bill
+```{r}
+df <- data.frame(time = factor(c("Lunch","Dinner"), levels=c("Lunch","Dinner")),
+                 total_bill = c(14.89, 17.23))
+
+```
+1. time total_bill
++ Lunch     14.89
++ Dinner    17.23
+
+Time | bill
+-----------
+lunch | 14.89
+dinner | 17.23
+
+
+### plot the bar graph with no color
+```{r}
+ggplot(data=df, aes(x=time, y=total_bill)) + geom_bar(stat="identity")
+
+```
+
+### Map the time of day to different filling colors. 
+
+** First plot**
+```{r}
+ggplot(data=df, aes(x=time, y=total_bill, fill=time)) + geom_bar(stat="identity")
+```
+
+
+** Second plot**
+```{r}
+ggplot(data=df, aes(x=time, y=total_bill)) + geom_bar(aes(fill=time), stat="identity")
+```
+
+
+
+## Adding a black outline
+```{r, echo=FALSE, error=FALSE,warning=TRUE}
+# Add a black outline
+ggplot(data=df, aes(x=time, y=total_bill, fill=time)) + geom_bar(colour="black", stat="identity")
+
+```
+
+## Plot with no legend
+```{r}
+ggplot(data=df, aes(x=time, y=total_bill, fill=time)) +
+    geom_bar(colour="black", stat="identity") +
+    guides(fill=FALSE)
+
+```
+
