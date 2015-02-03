@@ -19,3 +19,4 @@ install_course_zip("swirl_courses-master.zip", multi=TRUE, which_course="Statist
 install_course_zip("swirl_courses-master.zip", multi=TRUE, which_course="R_Programming_Alt")
 install_course_zip("swirl_courses-master.zip", multi=TRUE, which_course="R_Programming")
 install_course_zip("swirl_courses-master.zip", multi=TRUE, which_course="Open_Intro")
+
