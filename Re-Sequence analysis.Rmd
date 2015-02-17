@@ -1,0 +1,135 @@
+```{r}
+library(data.table)
+library(ggplot2)
+library(GenomicRanges)
+library(IRanges)
+library(reshape2)
+library(GenomicAlignments)
+
+```
+
+##Load the Biostrings packages
+```{r}
+source("http://bioconductor.org/biocLite.R")
+bioCLite(c("Biostrings", "hgu133plus2probe"))
+library(Biostrings)
+```
+
+
+##using XsString class
+```{r}
+b<- BString("I am a BString object")
+b 
+length(b)
+class(b)
+d <- DNAString("TTGAAAA-CTC-N")
+length(d)
+class(d)
+```
+
+## TheXString class
+```{r}
+d[3]
+d[7:12]
+b[length(b):1]## it will reverse the letters
+```
+
+###The XStringViews class
+```{r}
+v4 <- Views(d, start=3:0, end=5:8)
+v4
+length(v4)
+start(v4)
+end(v4)
+```
+
+##sc genome
+```{r}
+biocLite("BSgenome.Scerevisiae.UCSC.sacCer1")
+
+```
+
+##Load SC genome package
+```{r}
+library(BSgenome.Scerevisiae.UCSC.sacCer1)
+alphabetFrequency(Scerevisiae[["chr1"]])/length(Scerevisiae[["chr1"]])
+```
+
+
+
+##Load the human genome 
+```{r}
+source("http://bioconductor.org/biocLite.R")
+biocLite("illuminaHumanWGDASLv3.db")
+library(illuminaHumanWGDASLv3.db)
+alphabetFrequency(illuminaHumanWGDASLv3[["chr1"]])/length(illuminaHumanWGDASLv3[["chr1"]])
+
+```
+## Finding patterns
+```{r}
+matchPattern(pattern = "GATAGA", subject = Scerevisiae[["chr1"]])
+countPattern(pattern ="GATAGA", subject = Scerevisiae[["chr1"]])
+```
+
+##**Exercise: mismatch/indel
+```{r}
+matchPattern(pattern = "GATAGA", subject = Scerevisiae[["chr1"]],max.mismatch=6, min.mismatch=0, with.indels =TRUE, fixed= TRUE, algorithm= "auto")
+mismatch(pattern = "GTTTA", subject = Scerevisiae[["chr1"]])
+```
+
+##Handling probe sequence information 
+```{r}
+biocLite(c("Biostrings", "hgu133plus2probe", "ShortRead"))
+library(Biostrings)
+library(hgu133plus2probe)
+
+```
+
+```{r}
+probes <- DNAStringSet(hgu133plus2probe)
+```
+
+```{r}
+library(affy)
+GSE29617_affyBatch <- ReadAffy(celfile.path ="Data/GEO/GSE29617/")
+GSE29617_set2 <- rma(GSE29617_affyBatch)
+
+```
+
+
+##Handling probe sequence information
+```{r}
+library(ggplot2)
+library(reshape2)
+ggplot(dt_merged_melt[variable=="GSM733942.CEL.gz"],aes(x =as.factor(GC_count),y=value))+geom_violin()+geom_point(data=dt_merged_melt_sum,aes(x=as.factor(GC_count),y=mean), col="red",size=6)+theme_minimal(base_size =18)
+```
+
+```{r}
+GRanges
+```
+
+
+##Load a BAM  file into a GAlignments object
+```{r}
+library(Rsamtools)
+aln1_file <- system.file("extdata", "exl.bam", package = "Rsamtools")
+aln1 <- readGAlignments(aln1_file)
+aln1
+
+```
+
+##converting to a GRanges 
+```{r}
+```
+
+
+```{r}
+biocLite("TxDb.Dmelanogaster.UCSC.dm3.ensGene")
+l ibrary(TxDb.Dmelanogaster.UCSC.dm3.ensGene)
+TxDb.Dmelanogaster.UCSC.dm3.ensGene
+```
+
+
+
+
+
