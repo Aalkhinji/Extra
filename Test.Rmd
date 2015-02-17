@@ -1,0 +1,48 @@
+---
+title: "Test exam"
+output: html_document
+
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+##Q:1 x and y are two datatable in R , join the two table in one command.
+```{r}
+library(data.table)
+x <- data.table(a=c(3:5), b=c(13:15))
+y <- data.table(c=c(17:19), d=c(20:22))
+x
+y
+setkey(x,"A")
+setkey(y, "A")
+x[y, nomatch=0]
+```
+
+
+##Q:2 z is datatable in R with three columns.Write a one line command to compute the averagegrade for each student by assignment type and sort it by grade from high to low.
+```{r}
+z <- data.table(student_name=c(a,b,c,d,e,f,g,h,i,j), grade= c(80:90), assignment_type=c(1:10))
+z[,lsit(mgrade=mean(grade)), by= "assignment_type"][order(mgrad)]
+```
+
+##Q:3 Let E be an expressionSet in R, how would you retrive the expression.
+```{r}
+library(limma)
+library(Biobase)
+library(data.table)
+
+ ##ExpressionSet
+
+
+```
+
+
+
+
+##Q:4 Design matrix in limma, what contrst would you test?
+```{r}
+library(limma)
+mm <- model.matrix(~day+subject, eSet)
+```
+
