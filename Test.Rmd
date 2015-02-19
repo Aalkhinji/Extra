@@ -1,7 +1,8 @@
 ---
 title: "Test exam"
-output: html_document
-
+output: 
+    html_document:
+        keep_md: yes
 ---
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
@@ -24,14 +25,35 @@ x[y, nomatch=0]
 ```{r}
 n <-100
 z <- data.table(student_name=sample(letters,n,replace=TRUE), grade=rnorm(100,mean=70, sd=10), assignment_type=c(1:98, n, replace=TRUE))
-mgrade <- mean(grade)
-z[,list(mgrade), by= (assignment_type)][order(mgrade)]
+z[,list(mgrade=mean(grade)), by= (assignment_type)][order(mgrade)]
+```
+
+Aisha, you might try something like this to group by both student name and 
+assignment type and sort by grade decreasing from highest to lowest:
+
+```{r}
+# Students Example
+
+library(randomNames)
+library(data.table)
+
+n <- 200
+z <- data.table(
+    student_name=as.factor(sample(randomNames(40), n, replace=TRUE)), 
+                           grade=rnorm(n, mean = 70, sd=5), 
+                           assignment_type=as.factor(sample(1:10, n, replace=TRUE)), 
+                           key="student_name")
+str(z)
+grades <- z[, list(meangrade=mean(grade)), 
+            by=.(student_name,assignment_type)][order(meangrade, decreasing = TRUE)]
+summary(grades)
+grades
 ```
 
 ##Q:3 Let E be an expressionSet in R, how would you retrive the expression.
-```{r}
+```
 
- ##ExpressionSet
+##ExpressionSet
 exprs(E), fData(E), pData(E)
 
 ```
@@ -40,7 +62,7 @@ exprs(E), fData(E), pData(E)
 
 
 ##Q:4 Design matrix in limma, what contrst would you test?
-```{r}
+```
 library(limma)
 mm <- model.matrix(~day+subject, eSet)
 ```
