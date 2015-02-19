@@ -11,29 +11,28 @@ When you click the **Knit** button a document will be generated that includes bo
 ```{r}
 library(data.table)
 x <- data.table(a=c(3:5), b=c(13:15))
-y <- data.table(c=c(17:19), d=c(20:22))
+y <- data.table(b=c(12:14), d=c(2:4))
 x
 y
-setkey(x,"A")
-setkey(y, "A")
+setkey(x,"b")
+setkey(y, "b")
 x[y, nomatch=0]
 ```
 
 
 ##Q:2 z is datatable in R with three columns.Write a one line command to compute the averagegrade for each student by assignment type and sort it by grade from high to low.
 ```{r}
-z <- data.table(student_name=c(a,b,c,d,e,f,g,h,i,j), grade= c(80:90), assignment_type=c(1:10))
-z[,lsit(mgrade=mean(grade)), by= "assignment_type"][order(mgrad)]
+n <-100
+z <- data.table(student_name=sample(letters,n,replace=TRUE), grade=rnorm(100,mean=70, sd=10), assignment_type=c(1:98, n, replace=TRUE))
+mgrade <- mean(grade)
+z[,list(mgrade), by= (assignment_type)][order(mgrade)]
 ```
 
 ##Q:3 Let E be an expressionSet in R, how would you retrive the expression.
 ```{r}
-library(limma)
-library(Biobase)
-library(data.table)
 
  ##ExpressionSet
-
+exprs(E), fData(E), pData(E)
 
 ```
 
