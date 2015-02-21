@@ -1,0 +1,60 @@
+---
+title: "Homework 1"
+output:
+  pdf_document: default
+  html_document:
+    keep_md: yes
+---
+
+##Q:Use the ggplot2 package to plot the Iris data showing length vs width facetting petal/sepal vs flower type.
+##Load the Iris data file
+
+```{r}
+data(iris)
+```
+
+## Using ggplot2, and reshape2 to plot the data from iris
+###First load both packages
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(reshape2)
+## To display the iris data (the first few lines)
+head(iris)
+
+```
+
+##reshape2-melt
+```{r}
+iris$flower_id <- rownames(iris)
+iris_melted <- melt(iris)
+head(iris_melted)
+```
+
+##reshape2- melt and cast
+```{r}
+split_variable <- strsplit(as.character(iris_melted$variable), split= "\\.")
+##creating the two variables 
+iris_melted$flower_part <- sapply(split_variable, "[",1)
+iris_melted$measurement_type <- sapply(split_variable, "[",2)
+iris_melted$variable <- NULL
+head(iris_melted)
+iris_cast <- dcast(iris_melted, formula = flower_id + Species + flower_part ~ measurement_type)
+head(iris_cast)
+```
+
+
+
+
+
+##Facet Petal/Sepal with fowers type
+```{r}
+ggplot(data=iris_cast, aes(x=Width, y=Length))+ geom_point()+facet_grid(Species~flower_part, scale="free")+geom_smooth(method="lm")+theme_bw(base_size=12)
+
+```
+
+```{r}
+my_plot <- ggplot(data =iris_cast, aes( x=Width, y= Length, shape=Species, color = Species)) + geom_point() + facet_grid(~flower_part) +geom_smooth(method ="lm")+theme_bw(base_size=24)
+my_plot
+```
+
